@@ -1,14 +1,21 @@
 import express from 'express';
-import routes from './routes/index';
+import Routes from './routes/index';
 
+// Set the network port
+const PORT = process.env.PORT || 5000;
+// Init the Express application
 const app = express();
 
-app.use(express.json());
+// Middleware to parse JSON request bodies
+app.use(express.json({ limit: '50mb' }));
 
-app.use('/', routes);
+// Load all routes from routes/index.js
+app.use('/', Routes);
 
-const port = process.env.PORT || 5000;
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running http://localhost:${PORT}`);
+  console.log('Press CTRL+C to stop server');
 });
+
+module.exports = app;
